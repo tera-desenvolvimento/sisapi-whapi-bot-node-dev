@@ -12,6 +12,7 @@ const updateStep = require('./controllers/flux/updateStep.controller');
 const examesBot = require('./controllers/exames/examesBot.controller');
 const transportsBot = require('./controllers/transports/transportsBot.controller');
 const otherInfos = require('./controllers/misc/otherInfos.controller');
+const isGreetings = require('./controllers/misc/isGreetings.controller');
 
 const sendMessage = require('./controllers/whapi/sendMessage.controller');
 
@@ -48,7 +49,7 @@ async function startApp() {
 
             const flux = await getFluxByChatId(from);
 
-            if(flux.success === false || (messageData.messages[0].type === "text" && messageData.messages[0].text.body.toLowerCase() === "menu")) {
+            if(flux.success === false || (messageData.messages[0].type === "text" && isGreetings(messageData.messages[0].text.body))) {
                 const flux = await getFluxByChatId(from);
 
                 if(flux.success === false) {
