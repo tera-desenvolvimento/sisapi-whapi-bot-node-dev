@@ -13,6 +13,8 @@ const examesBot = require('./controllers/exames/examesBot.controller');
 const transportsBot = require('./controllers/transports/transportsBot.controller');
 const otherInfos = require('./controllers/misc/otherInfos.controller');
 const isGreetings = require('./controllers/misc/isGreetings.controller');
+const isTransportes = require('./controllers/misc/isTransportes.controller');
+const isExames = require('./controllers/misc/isExames.controller');
 const handleError = require('./controllers/misc/handleError.controller');
 
 const sendMessage = require('./controllers/whapi/sendMessage.controller');
@@ -43,7 +45,7 @@ async function startApp() {
             // Ignorar eventos que não sejam mensagens
             return res.sendStatus(200);
         } else if (messageData.messages[0].from_me) {
-            console.log('Mensagem do próprio bot, ignorando...');
+            //console.log('Mensagem do próprio bot, ignorando...');
             return res.sendStatus(200);
         } else {
             const from = messageData.messages[0].from;
@@ -51,16 +53,33 @@ async function startApp() {
             const flux = await getFluxByChatId(from);
 
             if(flux.success === false || (messageData.messages[0].type === "text" && isGreetings(messageData.messages[0].text.body))) {
-                const flux = await getFluxByChatId(from);
+                if(isExames(messageData.messages[0].text.body)) {
+                    if(flux.success === false) {
+                        createFlux(from, "post_greetings");
+                    } else {
+                        updateStep(from, "post_greetings");
+                    }
 
-                if(flux.success === false) {
-                    createFlux(from, "post_greetings");
+                    console.log("caiu no Exame");
+                    updateStep(from, "resultado");
+                    await examesBot({ from: from, first: true });
+                } else if(isTransportes(messageData.messages[0].text.body)) {
+                    if(flux.success === false) {
+                        createFlux(from, "post_greetings");
+                    } else {
+                        updateStep(from, "post_greetings");
+                    }
+
+                    updateStep(from, "transporte");
+                    await transportsBot({ from: from, first: true });
+                } else {
+                    if(flux.success === false) {
+                        createFlux(from, "post_greetings");
+                    } else {
+                        updateStep(from, "post_greetings");
+                    }
 
                     await sendGreetings(from);
-                    await sendMenu(from);
-                } else {
-                    updateStep(from, "post_greetings");
-
                     await sendMenu(from);
                 }
             } else if (flux.data.step === "post_greetings") {
@@ -87,13 +106,11 @@ async function startApp() {
                             break;
                     }
                 } else {
-                    await handleError(flux.data.chatId);
-                    updateStep(from, "post_greetings");
-                    await sendMenu(flux.data.chatId);
+                    await handleError(messageData);
                 }
-            } else if (flux.data.step === "aguardandoDocIdResultado") {
+            } else if (flux.data.step === "aguardandoDocIdResultado" || flux.data.step === "resultado") {
                 await examesBot({ from: flux.data.chatId, messages: messageData.messages });
-            } else if (flux.data.step === "aguardandoDocIdTransporte") {
+            } else if (flux.data.step === "aguardandoDocIdTransporte" || flux.data.step === "transporte") {
                 await transportsBot({ from: flux.data.chatId, messages: messageData.messages });
             } else if (flux.data.step === "aguardandoInformacoes") {
                 await otherInfos({ from: flux.data.chatId, messages: messageData.messages });

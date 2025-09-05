@@ -15,9 +15,8 @@ function isGreetings(message) {
     ];
 
     const entrada = message.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-    console.log(entrada);
 
-    return saudacoes.some(saudacao => entrada.startsWith(saudacao));
+    return saudacoes.some(saudacao => entrada.includes(saudacao));
 }
 
 module.exports = isGreetings;

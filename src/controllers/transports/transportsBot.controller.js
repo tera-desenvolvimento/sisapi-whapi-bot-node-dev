@@ -8,7 +8,7 @@ const transportsBot = async (messageData) => {
     if (messageData.first) {
         const message = {
             to: messageData.from,
-            body: "Agora digita seu CPF no seguinte formato 999.999.999-99, pra que eu possa consultar se existe agendamento no setor de transportes."
+            body: "Digita seu CPF no seguinte formato 999.999.999-99, pra que eu possa consultar se existe agendamento no setor de transportes."
         };
 
         try {
