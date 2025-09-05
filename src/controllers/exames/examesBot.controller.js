@@ -28,7 +28,7 @@ const examesBot = async (messageData) => {
             if (exames && exames.data.length > 0) {
                 await api.post("/messages/text", {
                     to: messageData.from,
-                    body: `Localizei ${exames.data.length} exames que podem ser retirados direto na secretaria 😊\n\n${exames.data.map(exame => `- Tipo: *${exame.type}* - Disponível desde: ${new Date(exame.arrivedDate).toLocaleDateString("pt-BR")}`).join("\n")}\n\nVocê pode retirar na sala de *RESULTADO DE EXAMES* aqui na secretaria, funciona de segunda a sexta das 7h30 as 13h, fica localizada na Rua do Bonfim, 565. Leve seu CPF.`
+                    body: `Localizei estes exames que podem ser retirados direto na secretaria 👇🏼\n\n${exames.data.map(exame => `- Tipo: *${exame.type}* - Disponível desde: ${new Date(exame.arrivedDate).toLocaleDateString("pt-BR")}`).join("\n")}\n\nVocê pode retirar na sala de *RESULTADO DE EXAMES* aqui na secretaria, funciona de segunda a sexta das 7h30 as 13h, fica localizada na Rua do Bonfim, 565. Leve seu CPF.`
                 });
 
                 updateStep(messageData.from, "post_greetings");

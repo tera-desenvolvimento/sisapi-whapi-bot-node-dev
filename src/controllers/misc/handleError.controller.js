@@ -1,9 +1,9 @@
 const api = require("../whapi/api.controller");
 
-async function sendGreetings(to) {
+async function handleError(to) {
     const message = {
         to,
-        body: "Olá! 👋 Sou o assistente virtual da Secretaria Municipal de Saúde. Fui desenvolvido para lhe ajudar com algumas informações importantes."
+        body: "Hmm… não consegui captar o que você quis dizer. Bora tentar de novo?"
     };
 
     try {
@@ -15,4 +15,4 @@ async function sendGreetings(to) {
     }
 }
 
-module.exports = sendGreetings;
+module.exports = handleError;

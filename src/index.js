@@ -13,6 +13,7 @@ const examesBot = require('./controllers/exames/examesBot.controller');
 const transportsBot = require('./controllers/transports/transportsBot.controller');
 const otherInfos = require('./controllers/misc/otherInfos.controller');
 const isGreetings = require('./controllers/misc/isGreetings.controller');
+const handleError = require('./controllers/misc/handleError.controller');
 
 const sendMessage = require('./controllers/whapi/sendMessage.controller');
 
@@ -20,9 +21,9 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.json({
-    message: "Chatbot rodando"
-  });
+    res.json({
+        message: "Chatbot rodando"
+    });
 });
 
 async function startApp() {
@@ -60,7 +61,7 @@ async function startApp() {
                 } else {
                     updateStep(from, "post_greetings");
 
-                    await sendMenu(from)
+                    await sendMenu(from);
                 }
             } else if (flux.data.step === "post_greetings") {
                 if(messageData.messages[0].type === "reply") {
@@ -85,6 +86,10 @@ async function startApp() {
                             updateStep(flux.data.chatId, "opcaoInvalida");
                             break;
                     }
+                } else {
+                    await handleError(flux.data.chatId);
+                    updateStep(from, "post_greetings");
+                    await sendMenu(flux.data.chatId);
                 }
             } else if (flux.data.step === "aguardandoDocIdResultado") {
                 await examesBot({ from: flux.data.chatId, messages: messageData.messages });
