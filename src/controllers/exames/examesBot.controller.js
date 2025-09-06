@@ -44,7 +44,7 @@ const examesBot = async (messageData) => {
                 updateStep(messageData.from, "post_greetings");
                 await sendMenu(messageData.from);
             }
-        } if (isTransportes(userMessage)){
+        } else if (isTransportes(userMessage)){
             updateStep(messageData.messages[0].from, "transporte");
             await transportsBot({ from: messageData.messages[0].from, first: true });
         } else {
