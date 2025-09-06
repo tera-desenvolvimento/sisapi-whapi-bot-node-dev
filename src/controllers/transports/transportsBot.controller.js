@@ -3,6 +3,8 @@ const updateStep = require('../flux/updateStep.controller');
 const validateDocId = require('../misc/validateDocId.controller');
 const getTripsByDocId = require('./getTripsByDocId.controller');
 const sendMenu = require('../misc/sendMenu.controller');
+const examesBot = require('../misc/examesBot.controller');
+const isExames = require('../misc/isExames.controller');
 
 const transportsBot = async (messageData) => {
     if (messageData.first) {
@@ -42,6 +44,9 @@ const transportsBot = async (messageData) => {
                 updateStep(messageData.from, "post_greetings");
                 await sendMenu(messageData.from);
             }
+        } if (isExames(userMessage)){
+            updateStep(messageData.messages[0].from, "resultado");
+            await examesBot({ from: messageData.messages[0].from, first: true });
         } else {
             const message = {
                 to: messageData.from,
