@@ -10,6 +10,9 @@ const fluxSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    requestData: {
+        type: Object
+    },
     createdAt: {
         type: Date,
         default: Date.now

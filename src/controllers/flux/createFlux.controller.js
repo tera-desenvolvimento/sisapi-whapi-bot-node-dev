@@ -4,7 +4,8 @@ async function createFlux(chatId, step) {
     try {
         const newFlux = new fluxModel({
             chatId,
-            step
+            step,
+            requestData: {}
         });
 
         await newFlux.save();

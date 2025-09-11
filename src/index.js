@@ -12,6 +12,7 @@ const sendMenu = require('./controllers/misc/sendMenu.controller');
 const updateStep = require('./controllers/flux/updateStep.controller');
 const examesBot = require('./controllers/exames/examesBot.controller');
 const transportsBot = require('./controllers/transports/transportsBot.controller');
+const transportRequestBot = require('./controllers/transports/transportRequestBot.controller');
 const otherInfos = require('./controllers/misc/otherInfos.controller');
 const isGreetings = require('./controllers/misc/isGreetings.controller');
 const isTransportes = require('./controllers/misc/isTransportes.controller');
@@ -97,6 +98,10 @@ async function startApp() {
                             updateStep(flux.data.chatId, "transporte");
                             await transportsBot({ from: flux.data.chatId, first: true });
                             break;
+                        case "consultarVagasTransporte":
+                            updateStep(flux.data.chatId, "consultarVagasTransporte");
+                            await transportRequestBot({ from: flux.data.chatId, first: true });
+                            break;
                         case "outrasInformacoes":
                             updateStep(flux.data.chatId, "outrasInformacoes");
                             await otherInfos({ from: flux.data.chatId, first: true });
@@ -116,6 +121,8 @@ async function startApp() {
                 await transportsBot({ from: flux.data.chatId, messages: messageData.messages });
             } else if (flux.data.step === "aguardandoInformacoes") {
                 await otherInfos({ from: flux.data.chatId, messages: messageData.messages });
+            } else if (flux.data.step === "aguardandoDataRequest" || flux.data.step === "aguardandoEscolhaVaga" || flux.data.step === "aguardandoDocIdRequest" || flux.data.step === "aguardandoNomeRequest" || flux.data.step === "aguardandoEnderecoRequest" || flux.data.step === "aguardandoPickupLocationRequest" || flux.data.step === "aguardandoDocProofRequest") {
+                await transportRequestBot({ from: flux.data.chatId, messages: messageData.messages });
             }
         }
     });

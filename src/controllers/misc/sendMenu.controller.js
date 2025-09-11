@@ -29,8 +29,13 @@ async function sendMenu(to) {
                 },
                 {
                     type: "quick_reply",
+                    id: "consultarVagasTransporte",
+                    title: "3️⃣ Consultar vagas de transporte"
+                },
+                {
+                    type: "quick_reply",
                     id: "outrasInformacoes",
-                    title: "3️⃣ Outras informações"
+                    title: "4️⃣ Outras informações"
                 }
             ]
         }
