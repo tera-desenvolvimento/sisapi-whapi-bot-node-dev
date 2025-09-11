@@ -17,9 +17,9 @@ const isGreetings = require('./controllers/misc/isGreetings.controller');
 const isTransportes = require('./controllers/misc/isTransportes.controller');
 const isExames = require('./controllers/misc/isExames.controller');
 const handleError = require('./controllers/misc/handleError.controller');
+const clearFluxes = require('./controllers/flux/clearFluxes.controller');
 
 const sendMessage = require('./controllers/whapi/sendMessage.controller');
-const clearBotFluxes = require('./controllers/cronJobs/clearBotFluxes.controller');
 
 app.use(express.json());
 app.use(cors());
@@ -32,7 +32,6 @@ app.get('/', (req, res) => {
 
 async function startApp() {
     await connectDB();
-    clearBotFluxes(); // Rodando rotina de limpeza de fluxos de chatbot
 
     app.post('/sendMessage', async (req, res) => {
         const { to, message } = req.body;
@@ -121,7 +120,14 @@ async function startApp() {
         }
     });
 
+    app.get('/clearFluxes', async (req, res) => {
+        await clearFluxes();
+        res.json({ message: "Limpeza de fluxos pendentes realizada." });
+        
+    });
+
     const PORT = process.env.PORT || 3000;
+
     app.listen(PORT, () => {
         console.log(`Servidor rodando na porta ${PORT}`);
     });

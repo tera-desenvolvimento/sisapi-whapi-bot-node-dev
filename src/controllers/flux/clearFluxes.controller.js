@@ -4,7 +4,7 @@ async function clearFluxes() {
     try {
         const data = await fluxModel.deleteMany()
 
-        console.log(data)
+        console.log("Limpeza de fluxos pendentes: ", data)
     } catch (error) {
         console.log("Erro ao realizar a limpeza de fluxos pendentes: ", error)
     }
