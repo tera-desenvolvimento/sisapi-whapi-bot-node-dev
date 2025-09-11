@@ -9,8 +9,8 @@
     ],
     "crons": [
     {
-      "path": "/api/hello",
-      "schedule": "47 8 * * *"
+      "path": "/clearFluxes",
+      "schedule": "35 9 * * *"
     }
   ]
 }
