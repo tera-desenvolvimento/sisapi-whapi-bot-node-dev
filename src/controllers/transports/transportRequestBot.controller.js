@@ -121,19 +121,19 @@ const transportRequestBot = async (messageData) => {
 
             const message = {
                 to: messageData.from,
-                body: `Estamos quase lá!\n\nMe informa um ponto de referência onde possamos te buscar?`
+                body: `Ótimo! Agora, por favor, informe a localidade onde você deseja ser deixado (ex: nome do bairro, estabelecimento, etc.):`
             };
 
             try {
                 const response = await api.post('/messages/text', message);
-                updateStep(messageData.from, "aguardandoPickupLocationRequest");
+                updateStep(messageData.from, "aguardandoDesembarqueRequest");
                 return response;
             } catch (error) {
                 console.error("Error sending message:", error);
             }
-        } else if (mainFlux.data.step === "aguardandoPickupLocationRequest") {
-            updateRequestData(messageData.from, 'pickupLocation', userMessage.toUpperCase());
-
+        } else if (mainFlux.data.step === "aguardandoDesembarqueRequest") {
+            updateRequestData(messageData.from, 'destination', userMessage.toUpperCase());
+            
             const message = {
                 to: messageData.from,
                 body: `Só mais uma coisa:\n\nMe envia por favor a foto de um documento que comprove a necessidade de agendamento do seu transporte (ex: solicitação de exame, receita médica ou outro documento similar).`
@@ -181,7 +181,7 @@ const transportRequestBot = async (messageData) => {
                         exitTime: mainFlux.data.requestData.exitTime,
                         address: mainFlux.data.requestData.address,
                         phone: mainFlux.data.chatId,
-                        pickupLocation: mainFlux.data.requestData.pickupLocation,
+                        pickupLocation: "DEFINIR",
                         destination: mainFlux.data.requestData.destination,
                         shedulingDocumentImage: imageId
                     }   
