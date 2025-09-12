@@ -160,7 +160,7 @@ async function startApp() {
                 await transportsBot({ from: flux.data.chatId, messages: messageData.messages });
             } else if (flux.data.step === "aguardandoInformacoes") {
                 await otherInfos({ from: flux.data.chatId, messages: messageData.messages });
-            } else if (flux.data.step === "aguardandoDataRequest" || flux.data.step === "aguardandoEscolhaVaga" || flux.data.step === "aguardandoDocIdRequest" || flux.data.step === "aguardandoNomeRequest" || flux.data.step === "aguardandoEnderecoRequest" || flux.data.step === "aguardandoPickupLocationRequest" || flux.data.step === "aguardandoDocProofRequest") {
+            } else if (flux.data.step === "aguardandoDataRequest" || flux.data.step === "aguardandoEscolhaVaga" || flux.data.step === "aguardandoDocIdRequest" || flux.data.step === "aguardandoNomeRequest" || flux.data.step === "aguardandoEnderecoRequest" || flux.data.step === "aguardandoPickupLocationRequest" || flux.data.step === "aguardandoDocProofRequest" || flux.data.step === "aguardandoDesembarqueRequest" ) {
                 await transportRequestBot({ from: flux.data.chatId, messages: messageData.messages });
             }
         }
