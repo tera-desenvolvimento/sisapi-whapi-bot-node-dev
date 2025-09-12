@@ -120,7 +120,7 @@ async function startApp() {
                                             {
                                                 type: "quick_reply",
                                                 id: "consultarAgendamento",
-                                                title: "2️⃣ Consulatar minha vaga"
+                                                title: "2️⃣ Consultar minha vaga"
                                             }
                                         ]
                                     }
