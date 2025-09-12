@@ -9,7 +9,7 @@ async function sendMenu(to) {
             text: ""
         },
         body: {
-            text: "Atenção ⚠️ Este contato envia apenas notificações e não recebe mensagens nem ligações. Em caso de dúvidas, procure diretamente a Secretaria Municipal de Saúde.\n\nEscolha uma das opções abaixo, lembrando que sempre que quiser retornar a estas opções é só digitar *menu:*"
+            text: "⚠️ Este contato não recebe ligações. Em caso de dúvidas, vá até a Secretaria.\n\nEscolha uma das opções abaixo, lembrando que sempre que quiser retornar a estas opções é só digitar *menu:*"
         },
         footer: {
             type: "text",
@@ -24,18 +24,13 @@ async function sendMenu(to) {
                 },
                 {
                     type: "quick_reply",
-                    id: "consultarAgendamento",
-                    title: "2️⃣ Consultar agendamento de transporte"
-                },
-                {
-                    type: "quick_reply",
-                    id: "consultarVagasTransporte",
-                    title: "3️⃣ Consultar vagas de transporte"
+                    id: "consultarTransporte",
+                    title: "2️⃣ Setor de transporte"
                 },
                 {
                     type: "quick_reply",
                     id: "outrasInformacoes",
-                    title: "4️⃣ Outras informações"
+                    title: "3️⃣ Outras informações"
                 }
             ]
         }

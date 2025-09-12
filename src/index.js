@@ -19,6 +19,7 @@ const isTransportes = require('./controllers/misc/isTransportes.controller');
 const isExames = require('./controllers/misc/isExames.controller');
 const handleError = require('./controllers/misc/handleError.controller');
 const clearFluxes = require('./controllers/flux/clearFluxes.controller');
+const api = require('./controllers/whapi/api.controller');
 
 const sendMessage = require('./controllers/whapi/sendMessage.controller');
 
@@ -94,6 +95,44 @@ async function startApp() {
                             updateStep(flux.data.chatId, "resultado");
                             await examesBot({ from: flux.data.chatId, first: true });
                             break;
+                        case "consultarTransporte":
+                                const message = {
+                                    to: flux.data.chatId,
+                                    type: "button",
+                                    header: {
+                                        type: "text",
+                                        text: ""
+                                    },
+                                    body: {
+                                        text: "Escolha uma das opções abaixo de acordo com o que você deseja:"
+                                    },
+                                    footer: {
+                                        type: "text",
+                                        text: ""
+                                    },
+                                    action: {
+                                        buttons: [
+                                            {
+                                                type: "quick_reply",
+                                                id: "consultarVagasTransporte",
+                                                title: "1️⃣ Agendar vaga"
+                                            },
+                                            {
+                                                type: "quick_reply",
+                                                id: "consultarAgendamento",
+                                                title: "2️⃣ Consulatar minha vaga"
+                                            }
+                                        ]
+                                    }
+                                };
+
+                            try {
+                                const response = await api.post('/messages/interactive', message);
+                                return response;
+                            } catch (error) {
+                                console.error("Erro ao enviar mensagem de saudação:", error);
+                                throw error;
+                            }
                         case "consultarAgendamento":
                             updateStep(flux.data.chatId, "transporte");
                             await transportsBot({ from: flux.data.chatId, first: true });

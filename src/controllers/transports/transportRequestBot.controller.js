@@ -149,17 +149,16 @@ const transportRequestBot = async (messageData) => {
         }
     } else if (messageData.messages && messageData.messages[0].type === 'reply') {
         const replyOption = messageData.messages[0].reply.buttons_reply.id;
-        const flux = await getFluxByChatId(messageData.from);
 
         if (replyOption.startsWith('ButtonsV3:agendar')) {
             const exitTime = replyOption.split('_')[1];
-            const destination = replyOption.split('_')[2];
+            const city = replyOption.split('_')[2];
 
             updateRequestData(messageData.from, 'exitTime', exitTime);
-            updateRequestData(messageData.from, 'destination', destination);
+            updateRequestData(messageData.from, 'city', city);
             const message = {
                 to: messageData.from,
-                body: `Você selecionou o transporte com saída às ${exitTime} com destino à ${destination}.\n\nVamos precisar de mais algumas informações para completar sua solicitação.\n\nPor favor, informe seu CPF no formato XXX.XXX.XXX-XX.`
+                body: `Você selecionou o transporte com saída às ${exitTime} com destino à ${city}.\n\nVamos precisar de mais algumas informações para completar sua solicitação.\n\nPor favor, informe seu CPF no formato XXX.XXX.XXX-XX.`
             };
 
             try {
