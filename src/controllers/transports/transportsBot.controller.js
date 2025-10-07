@@ -30,7 +30,7 @@ const transportsBot = async (messageData) => {
             if (trips && trips.length > 0) {
                 await api.post("/messages/text", {
                     to: messageData.from,
-                    body: `Localizei ${trips.length} agendamentos para este cpf 😊\n\n${trips.map(agendamento => `Data: ${agendamento.date} - ${agendamento.exitTime}\nDestino: *${agendamento.destination}*`).join("\n")}\n\né importante lembrar que o veículo sai no horário marcado, seja pontual.`
+                    body: `Localizei ${trips.length} agendamentos para este cpf 😊\n\n${trips.map(agendamento => `Data: ${agendamento.date} - ${agendamento.exitTime}\nDestino: *${agendamento.patients.filter(patient => patient.docId === userMessage)[0].destination}*`).join("\n")}\n\né importante lembrar que o veículo sai no horário marcado, seja pontual.`
                 });
 
                 updateStep(messageData.from, "post_greetings");
